@@ -23,7 +23,7 @@ import { DeleteActorUsecase } from '../../../../domain/usecases/delete-actor-use
 import { ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Actor')
-@Controller({ path: 'api/actor/v1/me' })
+@Controller({ path: 'api/user/v1/actor' })
 export class ActorController {
   constructor(
     private readonly getActorUsecase: GetActorUsecase,

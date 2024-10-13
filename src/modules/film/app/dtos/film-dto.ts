@@ -8,6 +8,7 @@ import {
   IsArray,
   Length,
 } from 'class-validator';
+import { FilmRating } from '../../domain/enums/film-rating';
 
 export class FilmDto {
   @ApiProperty()
@@ -81,4 +82,78 @@ export class GetFilmParamDto {
   @IsString()
   @ApiProperty()
   film_id!: number;
+}
+
+export class CreateFilmActorParamDto {
+  @IsString()
+  @ApiProperty()
+  film_id!: number;
+
+  @IsString()
+  @ApiProperty()
+  actor_id!: number;
+}
+
+export class UpdateFilmDto {
+  @ApiProperty()
+  @IsString()
+  @Length(1, 100, {
+    message: 'Title must be between 1 and 100 characters long.',
+  })
+  title: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  description?: string;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsInt()
+  release_year?: number;
+
+  @ApiProperty()
+  @IsInt()
+  language_id!: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsInt()
+  original_language_id?: number;
+
+  @ApiProperty()
+  @IsInt()
+  rental_duration!: number;
+
+  @ApiProperty()
+  @IsNumber()
+  rental_rate!: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsInt()
+  length?: number;
+
+  @ApiProperty()
+  @IsNumber()
+  replacement_cost!: number;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  rating?: FilmRating;
+
+  @ApiProperty()
+  @IsDate()
+  last_update!: Date;
+
+  @ApiProperty()
+  @IsOptional()
+  @IsArray()
+  special_features?: string[];
+
+  @ApiProperty()
+  @IsOptional()
+  @IsString()
+  fulltext?: string;
 }

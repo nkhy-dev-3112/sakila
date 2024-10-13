@@ -2,6 +2,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { CategoryModel } from '../../../category/domain/models/category-model';
 import { LanguageModel } from '../../../language/domain/models/language-model';
 import { ActorModel } from '../../../actor/domain/models/actor-model';
+import { FilmRating } from '../enums/film-rating';
 
 export class FilmModel {
   @ApiProperty({ name: 'film_id' })
@@ -35,7 +36,7 @@ export class FilmModel {
   public readonly replacementCost: number;
 
   @ApiProperty({ name: 'rating' })
-  public readonly rating: string | undefined;
+  public readonly rating: FilmRating | undefined;
 
   @ApiProperty({ name: 'last_update' })
   public readonly lastUpdate: Date;
@@ -71,7 +72,7 @@ export class FilmModel {
     rentalRate: number,
     length: number | undefined,
     replacementCost: number,
-    rating: string | undefined,
+    rating: FilmRating | undefined,
     lastUpdate: Date,
     specialFeatures: string[] | undefined,
     fulltext: string | undefined,

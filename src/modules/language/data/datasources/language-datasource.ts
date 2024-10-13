@@ -43,7 +43,7 @@ export class LanguageDatasource {
   }
 
   public async update(
-    languageId: number,
+    language: LanguageModel,
     name: string | undefined,
     lastUpdate: Date | undefined,
   ): Promise<boolean> {
@@ -53,7 +53,7 @@ export class LanguageDatasource {
     };
 
     if (Object.keys(data).length > 0) {
-      await this.languageRepository.update(languageId, {
+      await this.languageRepository.update(language.languageId, {
         ...data,
       });
       return true;
