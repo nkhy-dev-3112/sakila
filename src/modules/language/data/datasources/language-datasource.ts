@@ -28,7 +28,7 @@ export class LanguageDatasource {
     const condition: FindOptionsWhere<LanguageEntity> = {};
 
     if (languageId) {
-      condition['languageId'] = languageId;
+      condition['language_id'] = languageId;
     }
 
     if (name) {
@@ -48,8 +48,8 @@ export class LanguageDatasource {
     lastUpdate: Date | undefined,
   ): Promise<boolean> {
     const data = {
-      ...(name !== undefined && { name }),
-      ...(lastUpdate !== undefined && { lastUpdate }),
+      ...(name !== undefined && { name: name }),
+      ...(lastUpdate !== undefined && { last_update: lastUpdate }),
     };
 
     if (Object.keys(data).length > 0) {

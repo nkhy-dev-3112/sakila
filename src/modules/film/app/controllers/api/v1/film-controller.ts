@@ -8,7 +8,6 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { GetFilmUsecase } from '../../../../domain/usecases/film/get-film-usecase';
 import { Response } from 'express';
 import {
@@ -23,7 +22,6 @@ import { CheckFilmActorExistUsecase } from '../../../../domain/usecases/film-act
 import { FilmActorModel } from '../../../../domain/models/film-actor-model';
 import { CreateFilmActorUsecase } from '../../../../domain/usecases/film-actor/create-film-actor-usecase';
 
-@ApiTags('Film')
 @Controller({ path: 'api/user/v1/film' })
 export class FilmController {
   constructor(

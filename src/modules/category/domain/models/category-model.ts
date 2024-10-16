@@ -1,14 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger';
-
 export class CategoryModel {
-  @ApiProperty({ name: 'language_id' })
-  categoryId: number;
+  public readonly categoryId: number;
 
-  @ApiProperty({ name: 'name' })
-  name: string;
+  public readonly name: string;
 
-  @ApiProperty({ name: 'last_update' })
-  lastUpdate: Date;
+  public readonly lastUpdate: Date;
 
   constructor(categoryId: number, name: string, lastUpdate: Date) {
     this.categoryId = categoryId;

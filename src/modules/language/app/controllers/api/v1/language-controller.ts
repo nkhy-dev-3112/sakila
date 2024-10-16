@@ -8,7 +8,6 @@ import {
   Put,
   Res,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import {
   CreateLanguageDto,
@@ -19,7 +18,6 @@ import { GetLanguageUsecase } from '../../../../domain/usecases/get-language-use
 import { UpdateLanguageUsecase } from '../../../../domain/usecases/update-language-usecase';
 import { CreateLanguageUsecase } from '../../../../domain/usecases/create-language-usecase';
 
-@ApiTags('Language')
 @Controller({ path: 'api/user/v1/language' })
 export class LanguageController {
   constructor(
@@ -33,14 +31,14 @@ export class LanguageController {
    */
   @Post()
   async create(@Body() body: CreateLanguageDto, @Res() res: Response) {
-    const language = await this.getLanguageUsecase.call(undefined, body.name);
+    let language = await this.getLanguageUsecase.call(undefined, body.name);
     if (language) {
       res
         .status(HttpStatus.BAD_REQUEST)
         .json({ message: 'This language is already exists' });
       return;
     }
-    await this.createLanguageUsecase.call(body.name);
+    language = await this.createLanguageUsecase.call(body.name);
     res.status(HttpStatus.CREATED).json(language.toJson());
   }
 
@@ -50,12 +48,14 @@ export class LanguageController {
   @Get('id/:language_id')
   async get(@Param() param: GetLanguageParamDto, @Res() res: Response) {
     const language = await this.getLanguageUsecase.call(
-      param.language_id,
+      parseInt(param.language_id),
       undefined,
     );
 
     if (!language) {
-      res.status(HttpStatus.NOT_FOUND).json({ message: 'Language not found' });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: 'Language not found' });
       return;
     }
 
@@ -72,12 +72,14 @@ export class LanguageController {
     @Res() res: Response,
   ) {
     const language = await this.getLanguageUsecase.call(
-      param.language_id,
+      parseInt(param.language_id),
       undefined,
     );
 
     if (!language) {
-      res.status(HttpStatus.NOT_FOUND).json({ message: 'Language not found' });
+      res
+        .status(HttpStatus.BAD_REQUEST)
+        .json({ message: 'Language not found' });
       return;
     }
 

@@ -20,9 +20,7 @@ import { GetActorListUsecase } from '../../../../domain/usecases/get-actor-list-
 import { UpdateActorUsecase } from '../../../../domain/usecases/update-actor-usecase';
 import { CreateActorUsecase } from '../../../../domain/usecases/create-actor-usecase';
 import { DeleteActorUsecase } from '../../../../domain/usecases/delete-actor-usecase';
-import { ApiTags } from '@nestjs/swagger';
 
-@ApiTags('Actor')
 @Controller({ path: 'api/user/v1/actor' })
 export class ActorController {
   constructor(
@@ -46,7 +44,7 @@ export class ActorController {
     );
 
     if (!actor) {
-      res.status(HttpStatus.NOT_FOUND).json({ message: 'Actor not found' });
+      res.status(HttpStatus.BAD_REQUEST).json({ message: 'Actor not found' });
       return;
     }
 
@@ -105,11 +103,22 @@ export class ActorController {
 
   @Post('/')
   async create(@Body() body: CreateActorDto, @Res() res: Response) {
+    const _actor = await this.getActorUsecase.call(
+      undefined,
+      body.first_name,
+      body.last_name,
+      undefined,
+    );
+
+    if (_actor) {
+      res.status(HttpStatus.BAD_REQUEST).json({ message: 'Actor exists' });
+    }
+
     const actor = await this.createActorUsecase.call(
       body.first_name,
       body.last_name,
     );
-    res.status(HttpStatus.OK).json(actor.toJson());
+    res.status(HttpStatus.CREATED).json(actor.toJson());
   }
 
   /**

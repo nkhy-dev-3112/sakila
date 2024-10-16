@@ -17,6 +17,7 @@ export class CreateActorUsecase {
       now,
       undefined,
     );
+
     await this.actorRepository.create(actor);
 
     return actor;
