@@ -8,6 +8,8 @@ import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { addTransactionalDataSource } from 'typeorm-transactional';
 import { DataSource } from 'typeorm';
 import { ActorModule } from '../actor/actor.module';
+import { SentryGlobalFilter, SentryModule } from '@sentry/nestjs/setup';
+import { APP_FILTER } from '@nestjs/core';
 
 @Module({
   imports: [
@@ -27,9 +29,16 @@ import { ActorModule } from '../actor/actor.module';
         return addTransactionalDataSource(new DataSource(options));
       },
     }),
+    SentryModule.forRoot(),
     forwardRef(() => ActorModule),
   ],
   controllers: [AppController],
-  providers: [GetInformationUsecase],
+  providers: [
+    GetInformationUsecase,
+    {
+      provide: APP_FILTER,
+      useClass: SentryGlobalFilter,
+    },
+  ],
 })
 export class AppModule {}
